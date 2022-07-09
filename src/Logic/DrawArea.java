@@ -1,6 +1,6 @@
 package Logic;
 
-import Entity.Slab;
+import Entity.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,11 +20,13 @@ class DrawArea extends JPanel implements ActionListener {
     private Color bg = Color.BLACK;
     private Slab gp;
     private Slab pp;
+    private Ball ball;
 
     public DrawArea() {
         setBackground(bg);
         gp = new Slab(Game.SCREEN_WIDTH/10*9, Game.SCREEN_HEIGHT/2 - Game.SLAB_HEIGHT/2, "Green.png");
         pp = new Slab(Game.SCREEN_WIDTH/10-Game.SLAB_WIDTH, Game.SCREEN_HEIGHT/2 - Game.SLAB_HEIGHT/2, "Pink.png");
+        ball = new Ball();
     }
 
     @Override
@@ -34,26 +36,39 @@ class DrawArea extends JPanel implements ActionListener {
 
         gp.draw(g2);
         pp.draw(g2);
+        ball.draw(g2);
     }
 
 
     void keyPressed(KeyEvent e) {
-        if(e.getKeyChar() == 'a') System.out.println("Pressed a");
-        if(e.getKeyChar() == 'w') System.out.println("Pressed w");
-        if(e.getKeyChar() == 's') System.out.println("Pressed s");
-        if(e.getKeyChar() == 'd') System.out.println("Pressed d");
+        if(e.getKeyCode() == 87) pp.setDirection(1);
+        if(e.getKeyCode() == 83) pp.setDirection(2);
+        if(e.getKeyCode() == 38) gp.setDirection(1);
+        if(e.getKeyCode() == 40) gp.setDirection(2);
     }
 
 
     void keyReleased(KeyEvent e) {
-        if(e.getKeyChar() == 'a') System.out.println("Released a");
-        if(e.getKeyChar() == 'w') System.out.println("Released w");
-        if(e.getKeyChar() == 's') System.out.println("Released s");
-        if(e.getKeyChar() == 'd') System.out.println("Released d");
+        if(e.getKeyCode() == 87 && pp.getDirection() == 1) pp.setDirection(0);
+        if(e.getKeyCode() == 83 && pp.getDirection() == 2) pp.setDirection(0);
+        if(e.getKeyCode() == 38 && gp.getDirection() == 1) gp.setDirection(0);
+        if(e.getKeyCode() == 40 && gp.getDirection() == 2) gp.setDirection(0);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public Slab getGp() {
+        return gp;
+    }
+
+    public Slab getPp() {
+        return pp;
+    }
+
+    public Ball getBall() {
+        return ball;
     }
 }
