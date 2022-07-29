@@ -21,7 +21,7 @@ public class Ball {
     public Ball() {
         x = Game.SCREEN_WIDTH/2 - width/2;
         y = Game.SCREEN_HEIGHT/2 - width/2;
-        dir = rand.nextInt(360);
+        dir = 0;//rand.nextInt(360);
     }
 
     public void move() {
@@ -69,5 +69,9 @@ public class Ball {
 
     public void start() {
         speed = Game.SCREEN_HEIGHT/50;
+    }
+
+    public void setDir(double dir) {
+        this.dir = dir;
     }
 }

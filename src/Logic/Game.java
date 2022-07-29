@@ -20,9 +20,11 @@ public class Game {
     public static final int SLAB_HEIGHT = SCREEN_HEIGHT/5;
     public static final int BALL_WIDTH = SCREEN_WIDTH/30;
 
+    //declarations
     private JFrame frame;
     private DrawArea da;
     private Timer timer;
+    double dirChange;
 
 
     public Game() {
@@ -36,6 +38,7 @@ public class Game {
 
     private void runGame() {
         long startTime = System.currentTimeMillis();
+
 
         frame = new JFrame("Extreme Super Amazing Rogue Pong Plus Remastered");
         da = new DrawArea();
@@ -97,16 +100,92 @@ public class Game {
                 time.setText(String.valueOf(elapsedMinutes) + ":" + String.valueOf(secondsDisplay));
 
 
-
-                if(gp.getX() - ball.getX() <= BALL_WIDTH && gp.getX() - ball.getX() >= BALL_WIDTH/1.5 && ball.getY() > gp.getY()-BALL_WIDTH/2 && ball.getY() < gp.getY()+BALL_WIDTH/2+SLAB_HEIGHT)
+                //collisions inside walls
+                if(gp.getX() - ball.getX() <= BALL_WIDTH && gp.getX() - ball.getX() >= BALL_WIDTH-SLAB_WIDTH/2 && ball.getY() > gp.getY()-BALL_WIDTH && ball.getY() < gp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
                 {
-                    ball.invertX();
+                    //ball.invertX();
+                    dirChange = (double)(ball.getY() - gp.getY() + BALL_WIDTH*0.5) / (SLAB_HEIGHT);
+                    if (dirChange <= 0.5) {
+                        if (dirChange < 0) dirChange = 0;
+                        ball.setDir(240 - dirChange*120 );
+                    }
+                    else {
+                        if (dirChange > 1) dirChange = 1;
+                        ball.setDir(180 - (dirChange-0.5)*120);
+                    }
+
                 }
-                else if( ball.getX() - (pp.getX() + SLAB_WIDTH) <= 0 && ball.getX() - (pp.getX() + SLAB_WIDTH) >= BALL_WIDTH/-0.5 && ball.getY() > pp.getY()-BALL_WIDTH/2 && ball.getY() < pp.getY()+BALL_WIDTH/2+SLAB_HEIGHT)
+                else if( ball.getX() - (pp.getX() + SLAB_WIDTH) <= 0 && ball.getX() - (pp.getX() + SLAB_WIDTH) >= -SLAB_WIDTH/2 && ball.getY() > pp.getY()-BALL_WIDTH && ball.getY() < pp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
                 {
-                    ball.invertX();
+                    //ball.invertX();
+
+                    dirChange = (double)(ball.getY() - pp.getY() + BALL_WIDTH*0.5) / (SLAB_HEIGHT);
+                    if (dirChange <= 0.5) {
+                        if (dirChange < 0) dirChange = 0;
+                        ball.setDir(dirChange*120 + 300);
+                    }
+                    else {
+                        if (dirChange > 1) dirChange = 1;
+                        ball.setDir((dirChange-0.5)*120);
+                    }
+                }
+                //upper wall collisions
+                if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() + BALL_WIDTH < gp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > gp.getY() )
+                {
+                    if(ball.getY()+BALL_WIDTH > gp.getY()) ball.setY(gp.getY()-BALL_WIDTH);
+                }
+                if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() + BALL_WIDTH < pp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > pp.getY() )
+                {
+                    if(ball.getY()+BALL_WIDTH > pp.getY()) ball.setY(pp.getY()-BALL_WIDTH);
                 }
 
+                //bottom wall collisions
+                if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() > gp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < gp.getY() + SLAB_HEIGHT )
+                {
+                    if(ball.getY() < gp.getY()+SLAB_HEIGHT) ball.setY(gp.getY()+SLAB_HEIGHT);
+                }
+                if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() > pp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < pp.getY() + SLAB_HEIGHT )
+                {
+                    if(ball.getY() < pp.getY()+SLAB_HEIGHT) ball.setY(pp.getY()+SLAB_HEIGHT);
+                }
+
+                //collisions outer walls
+                if(pp.getX() - ball.getX() <= BALL_WIDTH && pp.getX() - ball.getX() >= BALL_WIDTH-SLAB_WIDTH/2 && ball.getY() > pp.getY()-BALL_WIDTH && ball.getY() < pp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
+                {
+                    //ball.invertX();
+                    dirChange = (double)(ball.getY() - pp.getY() + BALL_WIDTH*0.5) / (SLAB_HEIGHT);
+                    if (dirChange <= 0.5) {
+                        if (dirChange < 0) dirChange = 0;
+                        ball.setDir(240 - dirChange*120 );
+                    }
+                    else {
+                        if (dirChange > 1) dirChange = 1;
+                        ball.setDir(180 - (dirChange-0.5)*120);
+                    }
+
+                }
+                else if( ball.getX() - (gp.getX() + SLAB_WIDTH) <= 0 && ball.getX() - (gp.getX() + SLAB_WIDTH) >= -SLAB_WIDTH/2 && ball.getY() > gp.getY()-BALL_WIDTH && ball.getY() < gp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
+                {
+                    //ball.invertX();
+
+                    dirChange = (double)(ball.getY() - gp.getY() + BALL_WIDTH*0.5) / (SLAB_HEIGHT);
+                    if (dirChange <= 0.5) {
+                        if (dirChange < 0) dirChange = 0;
+                        ball.setDir(dirChange*120 + 300);
+                    }
+                    else {
+                        if (dirChange > 1) dirChange = 1;
+                        ball.setDir((dirChange-0.5)*120);
+                    }
+                }
+
+
+
+                //hurt
                 if(ball.getX()<0) ball.setX(0);
                 else if(ball.getX() > Game.SCREEN_WIDTH - BALL_WIDTH) ball.setX(Game.SCREEN_WIDTH - BALL_WIDTH);
                 if (ball.getX() == 0 || ball.getX() == Game.SCREEN_WIDTH-BALL_WIDTH) {
