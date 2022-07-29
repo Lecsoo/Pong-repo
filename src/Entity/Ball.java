@@ -12,39 +12,62 @@ public class Ball {
     private int x;
     private int y;
     private Image image = Toolkit.getDefaultToolkit().getImage("Yellow.png");
-    private double xd = 0;
-    private int yd = 0;
-    private int speed = 8;
+    private double dir = 0;
+    private int speed = 0;
     private double movex = 0;
     private double movey = 0;
     Random rand = new Random();
 
     public Ball() {
-        x = Game.SCREEN_WIDTH/2 + width/2;
-        y = Game.SCREEN_HEIGHT/2 + width/2;
-        xd = Math.PI;//rand.nextInt(360);
-        /*xd = rand.nextInt(39) - 19;
-        yd = rand.nextInt(39) - 19;*/
+        x = Game.SCREEN_WIDTH/2 - width/2;
+        y = Game.SCREEN_HEIGHT/2 - width/2;
+        dir = rand.nextInt(360);
     }
 
     public void move() {
-        //x += xd/2;
-        movex = speed * Math.cos(xd);
+        movex = speed * Math.cos(Math.toRadians(dir));
         x += movex;
+        /*
         if(x<0) x=0;
         else if(x>Game.SCREEN_WIDTH - width) x=Game.SCREEN_WIDTH - width;
-        if (x == 0 || x == Game.SCREEN_WIDTH-width) xd = 180 - xd;
+        if (x == 0 || x == Game.SCREEN_WIDTH-width) dir = 180 - dir;*/
 
-        //y += yd/2;
-        movey = speed * Math.sin(xd);
+        movey = speed * Math.sin(Math.toRadians(dir));
         y += movey;
         if(y<0) y=0;
         else if(y>Game.SCREEN_HEIGHT - width) y=Game.SCREEN_HEIGHT - width;
 
-        if (y == 0 || y == Game.SCREEN_HEIGHT-width) xd = 360 - xd;
+        if (y == 0 || y == Game.SCREEN_HEIGHT-width) dir = 360 - dir;
     }
 
     public void draw(Graphics2D g2) {
         g2.drawImage(image, x, y, width, width, null);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void invertY() {
+        dir = 360 - dir;
+    }
+    public void invertX() {
+        dir = 180 - dir;
+    }
+
+    public void start() {
+        speed = Game.SCREEN_HEIGHT/50;
     }
 }

@@ -13,11 +13,13 @@ public class Slab {
     private int y = 0;
     private Image image;
     private int direction = 0;
+    private int hp;
 
     public Slab(int x, int y, String image) {
         this.x = x;
         this.y = y;
         this.image = Toolkit.getDefaultToolkit().getImage(image);
+        hp = 10;
     }
 
     public void draw(Graphics2D g2) {
@@ -45,5 +47,25 @@ public class Slab {
             default:
                 break;
         }
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void hurt(int x) {
+        hp -= x;
+    }
+
+    public void setHp() {
+        --this.hp;
     }
 }

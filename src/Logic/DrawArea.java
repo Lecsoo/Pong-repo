@@ -42,17 +42,18 @@ class DrawArea extends JPanel implements ActionListener {
 
     void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == 87) pp.setDirection(1);
-        if(e.getKeyCode() == 83) pp.setDirection(2);
-        if(e.getKeyCode() == 38) gp.setDirection(1);
-        if(e.getKeyCode() == 40) gp.setDirection(2);
+        else if(e.getKeyCode() == 83) pp.setDirection(2);
+        else if(e.getKeyCode() == 38) gp.setDirection(1);
+        else if(e.getKeyCode() == 40) gp.setDirection(2);
+        else if(e.getKeyCode() == 32) ball.start();
     }
 
 
     void keyReleased(KeyEvent e) {
         if(e.getKeyCode() == 87 && pp.getDirection() == 1) pp.setDirection(0);
-        if(e.getKeyCode() == 83 && pp.getDirection() == 2) pp.setDirection(0);
-        if(e.getKeyCode() == 38 && gp.getDirection() == 1) gp.setDirection(0);
-        if(e.getKeyCode() == 40 && gp.getDirection() == 2) gp.setDirection(0);
+        else if(e.getKeyCode() == 83 && pp.getDirection() == 2) pp.setDirection(0);
+        else if(e.getKeyCode() == 38 && gp.getDirection() == 1) gp.setDirection(0);
+        else if(e.getKeyCode() == 40 && gp.getDirection() == 2) gp.setDirection(0);
     }
 
     @Override
@@ -71,4 +72,5 @@ class DrawArea extends JPanel implements ActionListener {
     public Ball getBall() {
         return ball;
     }
+
 }
