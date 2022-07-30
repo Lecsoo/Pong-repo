@@ -12,7 +12,7 @@ public class Game {
 
     public static final int SCREEN_HEIGHT = 720;
     public static final int SCREEN_WIDTH = 1280;
-    /*
+/*
     public static final int SCREEN_HEIGHT = 1080;
     public static final int SCREEN_WIDTH = 1920;
 */
@@ -113,7 +113,7 @@ public class Game {
                         if (dirChange > 1) dirChange = 1;
                         ball.setDir(180 - (dirChange-0.5)*120);
                     }
-
+                    ball.setColor("green");
                 }
                 else if( ball.getX() - (pp.getX() + SLAB_WIDTH) <= 0 && ball.getX() - (pp.getX() + SLAB_WIDTH) >= -SLAB_WIDTH/2 && ball.getY() > pp.getY()-BALL_WIDTH && ball.getY() < pp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
                 {
@@ -128,33 +128,10 @@ public class Game {
                         if (dirChange > 1) dirChange = 1;
                         ball.setDir((dirChange-0.5)*120);
                     }
+                    ball.setColor("pink");
                 }
-                //upper wall collisions
-                if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
-                        && ball.getY() + BALL_WIDTH < gp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > gp.getY() )
-                {
-                    if(ball.getY()+BALL_WIDTH > gp.getY()) ball.setY(gp.getY()-BALL_WIDTH);
-                }
-                if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
-                        && ball.getY() + BALL_WIDTH < pp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > pp.getY() )
-                {
-                    if(ball.getY()+BALL_WIDTH > pp.getY()) ball.setY(pp.getY()-BALL_WIDTH);
-                }
-
-                //bottom wall collisions
-                if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
-                        && ball.getY() > gp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < gp.getY() + SLAB_HEIGHT )
-                {
-                    if(ball.getY() < gp.getY()+SLAB_HEIGHT) ball.setY(gp.getY()+SLAB_HEIGHT);
-                }
-                if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
-                        && ball.getY() > pp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < pp.getY() + SLAB_HEIGHT )
-                {
-                    if(ball.getY() < pp.getY()+SLAB_HEIGHT) ball.setY(pp.getY()+SLAB_HEIGHT);
-                }
-
                 //collisions outer walls
-                if(pp.getX() - ball.getX() <= BALL_WIDTH && pp.getX() - ball.getX() >= BALL_WIDTH-SLAB_WIDTH/2 && ball.getY() > pp.getY()-BALL_WIDTH && ball.getY() < pp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
+                else if(pp.getX() - ball.getX() <= BALL_WIDTH && pp.getX() - ball.getX() >= BALL_WIDTH-SLAB_WIDTH/2 && ball.getY() > pp.getY()-BALL_WIDTH && ball.getY() < pp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
                 {
                     //ball.invertX();
                     dirChange = (double)(ball.getY() - pp.getY() + BALL_WIDTH*0.5) / (SLAB_HEIGHT);
@@ -166,7 +143,7 @@ public class Game {
                         if (dirChange > 1) dirChange = 1;
                         ball.setDir(180 - (dirChange-0.5)*120);
                     }
-
+                    ball.setColor("pink");
                 }
                 else if( ball.getX() - (gp.getX() + SLAB_WIDTH) <= 0 && ball.getX() - (gp.getX() + SLAB_WIDTH) >= -SLAB_WIDTH/2 && ball.getY() > gp.getY()-BALL_WIDTH && ball.getY() < gp.getY()/*+BALL_WIDTH*/+SLAB_HEIGHT)
                 {
@@ -181,7 +158,35 @@ public class Game {
                         if (dirChange > 1) dirChange = 1;
                         ball.setDir((dirChange-0.5)*120);
                     }
+                    ball.setColor("green");
                 }
+                //upper wall collisions
+                else if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() + BALL_WIDTH < gp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > gp.getY() )
+                {
+                    if(ball.getY()+BALL_WIDTH > gp.getY()) ball.setY(gp.getY()-BALL_WIDTH);
+                    ball.setColor("green");
+                }
+                else if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() + BALL_WIDTH < pp.getY()+BALL_WIDTH  && ball.getY() + BALL_WIDTH > pp.getY() )
+                {
+                    if(ball.getY()+BALL_WIDTH > pp.getY()) ball.setY(pp.getY()-BALL_WIDTH);
+                    ball.setColor("pink");
+                }
+                //bottom wall collisions
+                else if(gp.getX() + SLAB_WIDTH - ball.getX() > 0 && gp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() > gp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < gp.getY() + SLAB_HEIGHT )
+                {
+                    if(ball.getY() < gp.getY()+SLAB_HEIGHT) ball.setY(gp.getY()+SLAB_HEIGHT);
+                    ball.setColor("green");
+                }
+                else if(pp.getX() + SLAB_WIDTH - ball.getX() > 0 && pp.getX() - (ball.getX() + BALL_WIDTH) < 0
+                        && ball.getY() > pp.getY()+ SLAB_HEIGHT - BALL_WIDTH  && ball.getY() < pp.getY() + SLAB_HEIGHT )
+                {
+                    if(ball.getY() < pp.getY()+SLAB_HEIGHT) ball.setY(pp.getY()+SLAB_HEIGHT);
+                    ball.setColor("pink");
+                }
+
 
 
 
@@ -191,10 +196,12 @@ public class Game {
                 if (ball.getX() == 0 || ball.getX() == Game.SCREEN_WIDTH-BALL_WIDTH) {
                     ball.invertX();
                     if (ball.getX() == 0) {
+                        if (ball.getBc() != Ball.ballColor.pink)
                         pp.hurt(1);
                         php.setText(String.valueOf(pp.getHp()));
                     }
                     else {
+                        if (ball.getBc() != Ball.ballColor.green)
                         gp.hurt(1);
                         ghp.setText(String.valueOf(gp.getHp()));
 

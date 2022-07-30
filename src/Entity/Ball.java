@@ -17,11 +17,18 @@ public class Ball {
     private double movex = 0;
     private double movey = 0;
     Random rand = new Random();
+    public enum ballColor {
+        yellow,
+        green,
+        pink;
+    }
+    private ballColor bc;
 
     public Ball() {
         x = Game.SCREEN_WIDTH/2 - width/2;
         y = Game.SCREEN_HEIGHT/2 - width/2;
-        dir = 0;//rand.nextInt(360);
+        dir = rand.nextInt(360);
+        bc = ballColor.yellow;
     }
 
     public void move() {
@@ -73,5 +80,20 @@ public class Ball {
 
     public void setDir(double dir) {
         this.dir = dir;
+    }
+
+    public void setColor(String color) {
+        if(color == "green") {
+            bc = ballColor.green;
+            image = Toolkit.getDefaultToolkit().getImage("GreenBall.png");
+        }
+        else if(color == "pink") {
+            bc = ballColor.pink;
+            image = Toolkit.getDefaultToolkit().getImage("PinkBall.png");
+        }
+    }
+
+    public ballColor getBc() {
+        return bc;
     }
 }
